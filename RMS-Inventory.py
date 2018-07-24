@@ -12,7 +12,7 @@ while (entered != "exit") :
     if (entered == "add") :
         #get more responses to add to the dictionary
         name = str(input("Enter the name of the item ")).lower()
-        location = str(input("Enter the location of the item (room.shelf.row): ")).lower()
+        location = str(input("Enter the location of the item (room.shelf.row.column): ")).lower()
         
     entered = str(input("Options: add, change, delete ")).lower()
 
