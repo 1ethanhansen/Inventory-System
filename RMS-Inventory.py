@@ -1,10 +1,6 @@
-#load text document with inventory into the program
-file = open('DO_NOT_TOUCH_INVENTORY.txt', 'r')
+import pickle
 
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#put code for reading text document into dictionary here
-inventory = {
-}
+inventory = pickle.load(open('DO_NOT_TOUCH_INVENTORY.txt', 'rb'))
 
 def fixtures(entered):
     entered = str(input("Options: add")).lower()
@@ -33,15 +29,16 @@ def items(entered) :
                 inventory[name] = location
             else:
                 print("Couldn't find that, try something else, or add an item")
+        #just having some fun
         elif (entered == "open the pod bay doors, hal") :
             print("I'm sorry Dave, I'm afraid I can't do that")
         else:
-            print("else running\n\n" + entered)
             name = entered
             if name in inventory:
                 print("The location of " + name + " is " + inventory[name])
             else :
                 print("That doesn't exist, try another name for the item or add an item")
+        pickle.dump(inventory, open("DO_NOT_TOUCH_INVENTORY.txt", "wb"))
         entered = str(input("Options:  add, change, delete, print, exit ")).lower()
 
 entered = str(input("Options: add, change, delete, print, exit, or just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
