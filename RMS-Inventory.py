@@ -1,6 +1,9 @@
 import pickle
 from difflib import get_close_matches
+import os
+from docx import Document
 
+#load the saved inventory from the file to a dictionary
 inventory = pickle.load(open('DO_NOT_TOUCH_INVENTORY.txt', 'rb'))
 
 def itemSearch(item) :
@@ -24,7 +27,34 @@ def itemSearch(item) :
             print("Couldn't find anything matching the name '" + item + "'. Try another name or add that item")
 
 def fixtures(entered):
-    entered = str(input("Options: add, find")).lower()
+    option = str(input("Options: add, find, exit ")).lower()
+    while (option != "exit" and option != "e") :
+        
+        if (option == "add" or option == "a") :
+            try :
+                #open the info file with the default system program, if it exists
+                os.startfile("C:\\Users\\Ethan Hansen\\Documents\\GitHub\\Inventory-System\\docs\\" + entered + ".docx")
+                
+            except FileNotFoundError:
+                #create a new document
+                document = Document()
+                #
+                #
+                #CHANGE CODE TO OPEN THE FILE IN THE CORRECT PATH HERE ||
+                #                                                      ||
+                #                                                      \/
+                document.save("C:\\Users\\Ethan Hansen\\Documents\\GitHub\\Inventory-System\\docs\\" + entered + ".docx")
+            
+        elif (option == "find" or option == "f") :
+            try :
+                #open the info file with the default system program
+                os.startfile("C:\\Users\\Ethan Hansen\\Documents\\GitHub\\Inventory-System\\docs\\" + entered + ".docx")
+                
+            except FileNotFoundError:
+                print("Whoops, that file doesn't exist. Try again")
+
+        option = str(input("Options: add, find, exit ")).lower()
+        
 
 def items(entered) :
     #while the user hasn't entered "exit", keep the program running
@@ -70,9 +100,11 @@ def items(entered) :
 
 #initial input
 entered = str(input("Options: add, change, delete, print, exit, or just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
+
 if (entered[:1] == "!") :
     #call the fixtures program with everthing but the !
     fixtures(entered[1:])
+    
 else :
     #call the items function with the input
     items(entered)
