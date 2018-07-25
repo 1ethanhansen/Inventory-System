@@ -29,7 +29,6 @@ def itemSearch(item) :
 def fixtures(entered):
     option = str(input("Options: add, find, exit ")).lower()
     while (option != "exit" and option != "e") :
-        
         if (option == "add" or option == "a") :
             try :
                 #open the info file with the default system program, if it exists
@@ -44,6 +43,7 @@ def fixtures(entered):
                 #                                                      ||
                 #                                                      \/
                 document.save("C:\\Users\\Ethan Hansen\\Documents\\GitHub\\Inventory-System\\docs\\" + entered + ".docx")
+                os.startfile("C:\\Users\\Ethan Hansen\\Documents\\GitHub\\Inventory-System\\docs\\" + entered + ".docx")
             
         elif (option == "find" or option == "f") :
             try :
@@ -59,7 +59,6 @@ def fixtures(entered):
 def items(entered) :
     #while the user hasn't entered "exit", keep the program running
     while (entered != "exit" and entered != "e") :
-        
         #if the user entered "add"
         if (entered == "add" or entered == "a") :
             #get more responses to add to the dictionary
@@ -84,7 +83,12 @@ def items(entered) :
                 location = str(input("Enter the new location of " + name + ": ")).lower()
                 inventory[name] = location
             else:
-                print("Couldn't find that, try something else, or add an item")
+                #create a list of keys
+                keys = list(inventory.keys())
+                #this finds up the three best matches for the search item in keys
+                bestMatches = get_close_matches(name, keys)
+                print("Couldn't find that, add an item, or try one of these: ")
+                print(bestMatches)
                 
         elif (entered == "open the pod bay doors, hal") :
             #just having some fun
