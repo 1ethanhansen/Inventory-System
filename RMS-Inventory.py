@@ -1,6 +1,27 @@
 import pickle
+from difflib import get_close_matches
 
 inventory = pickle.load(open('DO_NOT_TOUCH_INVENTORY.txt', 'rb'))
+
+def itemSearch(item) :
+    if item in inventory:
+        #if the name was exact, just print the thing and location
+        print("The location of " + item + " is " + inventory[item])
+        
+    else :
+        #create a list of keys
+        keys = list(inventory.keys())
+        #this finds up the three best matches for the search item in keys
+        bestMatches = get_close_matches(item, keys)
+        
+        if len(bestMatches) > 0:
+            #print out locations of best matches if there were any
+            for guess in bestMatches:
+                itemSearch(guess)
+                
+        else :
+            #say we couldn't find anything
+            print("Couldn't find anything matching the name '" + item + "'. Try another name or add that item")
 
 def fixtures(entered):
     entered = str(input("Options: add, find")).lower()
@@ -40,13 +61,9 @@ def items(entered) :
             print("I'm sorry Dave, I'm afraid I can't do that")
             
         else:
-            #in this case, we are searching for an item
-            name = entered
-            if name in inventory:
-                print("The location of " + name + " is " + inventory[name])
-            else :
-                print("That doesn't exist, try another name for the item or add an item")
-
+            #in this case, we are searching for an item, look it up in function
+            itemSearch(entered)
+            
         #runs every loop
         pickle.dump(inventory, open("DO_NOT_TOUCH_INVENTORY.txt", "wb"))
         entered = str(input("Options:  add, change, delete, print, exit ")).lower()
