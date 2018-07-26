@@ -15,7 +15,7 @@ def itemSearch(item) :
         #create a list of keys
         keys = list(inventory.keys())
         #this finds up the three best matches for the search item in keys
-        bestMatches = get_close_matches(item, keys)
+        bestMatches = get_close_matches(item, keys, 3, 0.5)
         
         if len(bestMatches) > 0:
             #print out locations of best matches if there were any
@@ -63,7 +63,7 @@ def items(entered) :
         if (entered == "add" or entered == "a") :
             #get more responses to add to the dictionary
             name = str(input("Enter the name of the item to add ")).lower()
-            location = str(input("Enter the location of the item (room.zone.row.description): ")).lower()
+            location = str(input("Enter the location of the item (room.storage.row.description): ")).lower()
             #add the new item
             inventory[name] = location
             
@@ -100,15 +100,53 @@ def items(entered) :
             
         #runs every loop
         pickle.dump(inventory, open("DO_NOT_TOUCH_INVENTORY.txt", "wb"))
-        entered = str(input("Options:  add, change, delete, print, exit ")).lower()
+        entered = str(input("\nOptions:  add, change, delete, print, exit ")).lower()
 
-#initial input
-entered = str(input("Options: add, change, delete, print, exit, or just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
+def halp() :
+    #named this way because help() is already a python thing
+    topic = str(input("\nWhat topic do you want help with? (add, change, delete, print, search, fixtures) or exit ")).lower()
 
-if (entered[:1] == "!") :
-    #call the fixtures program with everthing but the !
-    fixtures(entered[1:])
-    
-else :
-    #call the items function with the input
-    items(entered)
+    while (topic != "exit") :
+        if (topic == "add" or topic == "a") :
+            print("To add a new item, enter 'add' or 'a'. You will then be prompted for the name of the item and then the location")
+            print("Here are the rooms for locations: shop, wash, CMM, closet, office, MRB")
+            
+        elif (topic == "change" or topic == "c") :
+            print("To change an existing item, enter 'change' or 'c'. You will then be prompted for the name of the item then the new location")
+            
+        elif (topic == "delete" or topic == "d") :
+            print("To delete an existing item, enter 'delete' or 'd'. You will then be prompted for the name of the item. WARNING: this is irreversable, there is no undo")
+
+        elif (topic == "print" or topic == "p") :
+            print("This displays the entirety of the inventory on the screen.")
+            
+        elif (topic == "search" or topic == "s") :
+            print("To search for an item, just enter its name. If that exact name doesn't exist, the system will show the 3 best matches and their locations")
+
+        elif (topic == "fixtures" or topic == "f") :
+            print("To do stuff with fixtures, enter the fixture number with an exclamation mark in front (ex. !9999)\nOnce in the fixtures there are two options: find and add. Just enter which one you want to do")
+
+        else:
+            print("I-I-I-I-I'll do almost anything. That you want me toooo. But I can't go for that, no can do")
+            
+        topic = str(input("\nWhat topic do you want help with? (add, change, delete, print, search, fixtures) or exit ")).lower()
+
+def main() :
+    #initial input
+    entered = str(input("Options: help, add, change, delete, print, exit, or just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
+
+    while (entered != "exit") :
+        if (entered == "help"):
+            halp()
+
+        elif (entered[:1] == "!") :
+            #call the fixtures program with everthing but the !
+            fixtures(entered[1:])
+            
+        else :
+            #call the items function with the input
+            items(entered)
+            
+        entered = str(input("\nOptions: help, add, change, delete, print, exit, or just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
+
+main()
