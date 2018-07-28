@@ -77,6 +77,10 @@ def items(entered) :
         elif (entered == "open the pod bay doors, hal") :
             #just having some fun
             print("I'm sorry Dave, I'm afraid I can't do that")
+
+        elif(entered == "is this loss?") :
+            #more fun
+            print("|\t||\n||\t|_")
             
         else:
             #in this case, we are searching for an item, look it up in function
