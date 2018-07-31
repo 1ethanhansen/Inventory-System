@@ -54,8 +54,10 @@ def items(entered) :
         name = str(input("Enter the name of the item to delete ")).lower()
         if name in inventory:
             #delete from the dictionary inventory the item with that name
-            del(inventory[name])
-            print("\n%s has been deleted" % (name, ))
+            entered = str(input("Confirm that you want to delete %s \nTHIS CANNOT BE UNDONE (Y/N): " % (name, ))).lower()
+            if (entered == "y") :
+            	del(inventory[name])
+            	print("\n%s has been deleted" % (name, ))
         else:
             print("Hey you can't delete something that doesn't exist! That's like dividing 0 by 0!")
         
