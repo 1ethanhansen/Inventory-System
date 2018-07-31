@@ -35,66 +35,66 @@ def fixtures(entered):
         print("That fixture number doesn't exist, either add it or try again")
 
 def items(entered) :
-    #while the user hasn't entered "exit", keep the program running
-    while (entered != "exit" and entered != "e") :
-        #if the user entered "add"
-        if (entered == "add" or entered == "a") :
-            #get more responses to add to the dictionary
-            name = str(input("Enter the name of the item to add ")).lower()
+    #if the user entered "add"
+    if (entered == "add" or entered == "a") :
+        #get more responses to add to the dictionary
+        name = str(input("Enter the name of the item to add ")).lower()
+        if (name != "exit") :
             location = str(input("Enter the location of the item (room.storage.row.description): ")).lower()
-            #add the new item
-            inventory[name] = location
-            
-        elif (entered == "print" or entered == "p") :
-            #this just displays everything in the inventory
-            print(inventory)
-            
-        elif (entered == "delete" or entered == "d") :
-            #get the name of the item and make it lowercase
-            name = str(input("Enter the name of the item to delete ")).lower()
-            if name in inventory:
-                #delete from the dictionary inventory the item with that name
-                del(inventory[name])
-            else:
-                print("Hey you can't delete something that doesn't exist! That's like dividing 0 by 0!")
-            
-        elif (entered == "change" or entered == "c") :
-            name = str(input("Enter the name of the item to change ")).lower()
-            if name in inventory:
-                location = str(input("Enter the new location of " + name + ": ")).lower()
+            if (location != "exit") :
+                #add the new item
                 inventory[name] = location
-            else:
-                #create a list of keys
-                keys = list(inventory.keys())
-                #this finds up the three best matches for the search item in keys
-                bestMatches = get_close_matches(name, keys)
-                if (len(bestMatches) > 0) :
-                    print("Couldn't find that, add an item, or try one of these: ")
-                    print(bestMatches)
-                else:
-                    print("Couldn't find that, add an item, or try again")
-                
-        elif (entered == "open the pod bay doors, hal") :
-            #just having some fun
-            print("I'm sorry Dave, I'm afraid I can't do that")
-
-        elif (entered == "is this loss?") :
-            #more fun
-            print("|\t||\n||\t|_")
-
-        elif (entered == "people sometimes make mistakes.") :
-            #Okay okay, last one I promise
-            entered = str(input("\nYES THEY DO. SHALL WE PLAY A GAME?\n\n"))
-            if (entered == "Love to. How about Global Thermonuclear War?") :
-                print("\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?")
-            
+        
+    elif (entered == "print" or entered == "p") :
+        #this just displays everything in the inventory
+        print(inventory)
+        
+    elif (entered == "delete" or entered == "d") :
+        #get the name of the item and make it lowercase
+        name = str(input("Enter the name of the item to delete ")).lower()
+        if name in inventory:
+            #delete from the dictionary inventory the item with that name
+            del(inventory[name])
+            print("\n%s has been deleted" % (name, ))
         else:
-            #in this case, we are searching for an item, look it up in function
-            itemSearch(entered)
+            print("Hey you can't delete something that doesn't exist! That's like dividing 0 by 0!")
+        
+    elif (entered == "change" or entered == "c") :
+        name = str(input("Enter the name of the item to change ")).lower()
+        if name in inventory:
+            location = str(input("Enter the new location of " + name + ": ")).lower()
+            inventory[name] = location
+        else:
+            #create a list of keys
+            keys = list(inventory.keys())
+            #this finds up the three best matches for the search item in keys
+            bestMatches = get_close_matches(name, keys)
+            if (len(bestMatches) > 0) :
+                print("Couldn't find that, add an item, or try one of these: ")
+                print(bestMatches)
+            else:
+                print("Couldn't find that, add an item, or try again")
             
-        #runs every loop
-        pickle.dump(inventory, open("DO_NOT_TOUCH_INVENTORY.txt", "wb"))
-        entered = str(input("\nOptions:  add, change, delete, print, exit ")).lower()
+    elif (entered == "open the pod bay doors, hal") :
+        #just having some fun
+        print("I'm sorry Dave, I'm afraid I can't do that")
+
+    elif (entered == "is this loss?") :
+        #more fun
+        print("|\t||\n||\t|_")
+
+    elif (entered == "people sometimes make mistakes.") :
+        #Okay okay, last one I promise
+        entered = str(input("\nYES THEY DO. SHALL WE PLAY A GAME?\n\n"))
+        if (entered == "Love to. How about Global Thermonuclear War?") :
+            print("\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?")
+        
+    else:
+        #in this case, we are searching for an item, look it up in function
+        itemSearch(entered)
+
+    #runs every loop
+    pickle.dump(inventory, open("DO_NOT_TOUCH_INVENTORY.txt", "wb"))
 
 def halp() :
     #named this way because help() is already a python thing
@@ -141,6 +141,6 @@ def main() :
             #call the items function with the input
             items(entered)
             
-        entered = str(input("\nOptions: help, add, change, delete, print, exit, or just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
+        entered = str(input("\nOptions: \nhelp\tadd\tchange\ndelete\tprint\texit\nOr just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
 
 main()
