@@ -128,6 +128,8 @@ def halp() :
         topic = str(input("\nWhat topic do you want help with? (add, change, delete, print, search, fixtures) or exit ")).lower()
 
 def main() :
+    #License agreement
+    print("NOTICE: By using this software you are agreeing to the terms and conditions listed in LICENSE.")
     #initial input
     entered = str(input("Options: \nhelp\tadd\tchange\ndelete\tprint\texit\nOr just enter the name of the item to find (for fixtures enter ! then the number ex. !9999) ")).lower()
 
@@ -138,6 +140,21 @@ def main() :
         elif (entered[:1] == "!") :
             #call the fixtures program with everthing but the !
             fixtures(entered[1:])
+
+        elif (entered == "about") :
+        	print("""
+  ______ _______ _    _          _   _
+ |  ____|__   __| |  | |   /\   | \ | |
+ | |__     | |  | |__| |  /  \  |  \| |
+ |  __|    | |  |  __  | / /\ \ | . ` |
+ | |____   | |  | |  | |/ ____ \| |\  |
+ |______|  |_|  |_|  |_/_/    \_\_| \_|
+
+  Everything Those Humans Are Needing
+  Created by Ethan Hansen
+  rev 1.0.15
+  8-10-2018
+                                      """)
             
         else :
             #call the items function with the input
